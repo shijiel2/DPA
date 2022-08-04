@@ -11,7 +11,7 @@ import torch.backends.cudnn as cudnn
 sys.path.append('./FeatureLearningRotNet/architectures')
 
 # from NetworkInNetwork import NetworkInNetwork
-from torchvision.models import resnet18
+from models import ResNet18
 import torchvision
 import torchvision.transforms as transforms
 import os
@@ -90,7 +90,7 @@ for part in range(args.start_partition,args.start_partition+args.num_partition_r
     print('here')
     trainloader = torch.utils.data.DataLoader(torch.utils.data.Subset(trainset,part_indices), batch_size=128, shuffle=True, num_workers=1)
     # net = NetworkInNetwork({'num_classes':10})
-    net = resnet18()
+    net = ResNet18(num_classes=10)
     net = net.to(device)
 
     criterion = nn.CrossEntropyLoss()
