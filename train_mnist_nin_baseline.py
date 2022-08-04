@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import sys
+import socket
 
 import torch
 import torch.nn as nn
@@ -9,13 +10,15 @@ import torch.nn.functional as F
 import torch.backends.cudnn as cudnn
 sys.path.append('./FeatureLearningRotNet/architectures')
 
-from NetworkInNetwork import NetworkInNetwork
+# from NetworkInNetwork import NetworkInNetwork
+from models import LeNet
 import torchvision
 import torchvision.transforms as transforms
 import os
 import argparse
 import numpy
 import random
+from notification import NOTIFIER
 
 parser = argparse.ArgumentParser(description='PyTorch MNIST Training')
 parser.add_argument('--num_partitions', default = 1200, type=int, help='number of partitions')
@@ -82,7 +85,8 @@ for part in range(args.start_partition,args.start_partition+args.num_partition_r
     nomtestloader = torch.utils.data.DataLoader(testset, batch_size=128, shuffle=True, num_workers=1)
     print('here')
     trainloader = torch.utils.data.DataLoader(torch.utils.data.Subset(trainset,part_indices), batch_size=128, shuffle=True, num_workers=1)
-    net  = NetworkInNetwork({'num_classes':10, 'num_inchannels': 1})
+    # net  = NetworkInNetwork({'num_classes':10, 'num_inchannels': 1})
+    net = LeNet()
     net = net.to(device)
 
     criterion = nn.CrossEntropyLoss()
@@ -128,6 +132,6 @@ for part in range(args.start_partition,args.start_partition+args.num_partition_r
     }
     torch.save(state, checkpoint_subdir + '/partition_'+ str(part)+'.pth')
 
-
+NOTIFIER.notify(socket.gethostname(), 'MNIST training done.')
 
 

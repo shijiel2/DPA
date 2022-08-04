@@ -9,7 +9,8 @@ import torch.nn.functional as F
 import torch.backends.cudnn as cudnn
 sys.path.append('./FeatureLearningRotNet/architectures')
 
-from NetworkInNetwork import NetworkInNetwork
+# from NetworkInNetwork import NetworkInNetwork
+from models import LeNet
 import torchvision
 import torchvision.transforms as transforms
 import os
@@ -49,7 +50,8 @@ for i in range(len(modelnames)):
     numpy.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
-    net  = NetworkInNetwork({'num_classes':10, 'num_inchannels': 1})
+    # net  = NetworkInNetwork({'num_classes':10, 'num_inchannels': 1})
+    net = LeNet()
     print(modelname)
     net = net.to(device)
 
