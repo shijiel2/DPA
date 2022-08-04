@@ -6,3 +6,4 @@
 data
 *.pth
 checkpoints
+dpa_cpsa.npy

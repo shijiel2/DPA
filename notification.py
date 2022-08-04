@@ -116,10 +116,10 @@ TELEGRAM_DESTINATION  = 552384750
 
 GMAIL_ADDRESS  = '404notfxxkingfound@gmail.com'
 GMAIL_PASSWORD = 'S13daowohao'
-NOTIFIER.add_notifier(SMTPGmailNotifier(
-    address=GMAIL_ADDRESS,
-    password=GMAIL_PASSWORD))
+# NOTIFIER.add_notifier(SMTPGmailNotifier(
+#     address=GMAIL_ADDRESS,
+#     password=GMAIL_PASSWORD))
 
-# NOTIFIER.add_notifier(TelegramBotNotifier(
-#    token=TELEGRAM_ACCESS_TOKEN,
-#    chat=TELEGRAM_DESTINATION))
+NOTIFIER.add_notifier(TelegramBotNotifier(
+   token=TELEGRAM_ACCESS_TOKEN,
+   chat=TELEGRAM_DESTINATION))

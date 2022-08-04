@@ -10,7 +10,8 @@ import torch.nn.functional as F
 import torch.backends.cudnn as cudnn
 sys.path.append('./FeatureLearningRotNet/architectures')
 
-from NetworkInNetwork import NetworkInNetwork
+# from NetworkInNetwork import NetworkInNetwork
+from torchvision.models import resnet18
 import torchvision
 import torchvision.transforms as transforms
 import os
@@ -88,7 +89,8 @@ for part in range(args.start_partition,args.start_partition+args.num_partition_r
     nomtestloader = torch.utils.data.DataLoader(testset, batch_size=128, shuffle=True, num_workers=1)
     print('here')
     trainloader = torch.utils.data.DataLoader(torch.utils.data.Subset(trainset,part_indices), batch_size=128, shuffle=True, num_workers=1)
-    net  = NetworkInNetwork({'num_classes':10})
+    # net = NetworkInNetwork({'num_classes':10})
+    net = resnet18()
     net = net.to(device)
 
     criterion = nn.CrossEntropyLoss()
@@ -134,4 +136,4 @@ for part in range(args.start_partition,args.start_partition+args.num_partition_r
     }
     torch.save(state, checkpoint_subdir + '/partition_'+ str(part)+'.pth')
 
-NOTIFIER.notify(socket.gethostname(), 'Job Done.')
+NOTIFIER.notify(socket.gethostname(), 'Training done.')
